@@ -813,7 +813,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619065761}
-  m_LocalRotation: {x: 0.059193358, y: -0.00000006292726, z: 0.000000013722526, w: 0.99824655}
+  m_LocalRotation: {x: 0.05919317, y: -0.000000062927086, z: 0.000000013722504, w: 0.99824655}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1083,8 +1083,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.08336648, y: -0, z: -0, w: 0.99651897}
-  m_LocalPosition: {x: 0, y: 2.5, z: -3.93}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.33, y: -0.172, z: -0.4817994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1242680125}
@@ -1593,8 +1593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0298884ca3a7e46baf3acdaed1a9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  jumpSpeed: 10
+  speed: 10
+  jumpSpeed: 100
   model: {fileID: 1015703111}
   camera: {fileID: 963194227}
 --- !u!1 &1323243739
@@ -2336,7 +2336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770804523}
-  m_LocalRotation: {x: 0.08336646, y: 0.000000035749466, z: -0.000000026757984, w: 0.99651897}
+  m_LocalRotation: {x: 0.083366685, y: 0.000000035749466, z: -0.000000026758011, w: 0.99651897}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

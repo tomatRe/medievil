@@ -9,14 +9,13 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float speed = 1;
     [SerializeField] private float jumpSpeed = 10;
     [SerializeField] private Transform model;
+    [SerializeField] private new Camera camera;
     private Animation anim;
-    private new Camera camera;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = model.GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -32,10 +31,12 @@ public class PlayerScript : MonoBehaviour
         float jump = Input.GetAxis("Jump");
 
         Vector3 cameraVector = camera.transform.forward;
-        transform.Translate(vertical * (speed * cameraVector.x), 0, vertical * (speed * cameraVector.z));
-        transform.Translate(horizontal * (speed * cameraVector.z), 0, horizontal * (speed * cameraVector.x));
 
-        model.Rotate(horizontal, 0, vertical);
+        GetComponent<Rigidbody>().velocity = 
+            new Vector3(
+                vertical * (speed * cameraVector.x) + horizontal * (speed * cameraVector.z),
+                0,
+                vertical * (speed * cameraVector.z) + horizontal * (speed * cameraVector.x));
 
         if (jump > 0)
         {
@@ -43,14 +44,32 @@ public class PlayerScript : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(fuerzaSalto);
         }
 
-        Animate(horizontal, vertical);
+        AnimateMovement(horizontal, vertical);
     }
 
-    void Animate(float horizontal, float vertical)
+    void AnimateMovement(float horizontal, float vertical)
     {
         if (horizontal > 0.1f || horizontal < -0.1f || vertical > 0.1f || vertical < -0.1f)
         {
             anim.Play("run");
+
+            if (horizontal > 0.1f)//Derecha
+            {
+                model.rotation = new Quaternion(0,1,0,1);
+            }
+            if (horizontal < -0.1f)//Izquierda
+            {
+                model.rotation = new Quaternion(0, -1, 0, 1);
+            }
+            if (vertical > 0.1f)//Arriba
+            {
+                model.rotation = new Quaternion(0, 1, 0, 0);
+            }
+            if (vertical < -0.1f)//Abajo
+            {
+                model.rotation = new Quaternion(0, -1, 0, 0);
+            }
+
         }
         else
         {

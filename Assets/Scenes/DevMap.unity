@@ -96,7 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
-  m_LightingDataAsset: {fileID: 112000000, guid: cf0f526f230b11e488160952934bc9e5,
+  m_LightingDataAsset: {fileID: 112000000, guid: 3651d0e73bd83754e9171a3510628c4e,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -405,7 +405,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertAxis: 1
+    m_InvertAxis: 0
   m_LegacyRadius: 3.4028235e+38
   m_LegacyHeightOffset: 3.4028235e+38
   m_LegacyHeadingBias: 3.4028235e+38
@@ -813,7 +813,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619065761}
-  m_LocalRotation: {x: 0.05919346, y: -0.000000062927754, z: 0.000000013722561, w: 0.99824655}
+  m_LocalRotation: {x: 0.059193358, y: -0.00000006292726, z: 0.000000013722526, w: 0.99824655}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1566,7 +1566,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &1242680128
 BoxCollider:
@@ -1593,6 +1593,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0298884ca3a7e46baf3acdaed1a9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
+  jumpSpeed: 10
+  model: {fileID: 1015703111}
+  camera: {fileID: 963194227}
 --- !u!1 &1323243739
 GameObject:
   m_ObjectHideFlags: 3
@@ -1689,7 +1693,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertAxis: 1
+    m_InvertAxis: 0
   m_LegacyRadius: 3.4028235e+38
   m_LegacyHeightOffset: 3.4028235e+38
   m_LegacyHeadingBias: 3.4028235e+38
@@ -1857,6 +1861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1523614745}
   - component: {fileID: 1523614746}
+  - component: {fileID: 1523614747}
   m_Layer: 0
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
@@ -1909,12 +1914,12 @@ MonoBehaviour:
     Dutch: 0
   m_YAxis:
     Value: 0.5
-    m_MaxSpeed: 2
+    m_MaxSpeed: 4
     m_AccelTime: 0.2
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
-    m_InvertAxis: 0
+    m_InvertAxis: 1
   m_XAxis:
     Value: 0
     m_MaxSpeed: 300
@@ -1922,7 +1927,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertAxis: 1
+    m_InvertAxis: 0
   m_Heading:
     m_HeadingDefinition: 2
     m_VelocityFilterStrength: 4
@@ -1947,6 +1952,30 @@ MonoBehaviour:
   - {fileID: 314360582}
   - {fileID: 1770804525}
   - {fileID: 619065763}
+--- !u!114 &1523614747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523614744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 1
+  m_IgnoreTag: Player
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 0
+  m_MaximumEffort: 4
+  m_Damping: 0
+  m_OptimalTargetDistance: 0
 --- !u!1001 &1606415428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2307,7 +2336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770804523}
-  m_LocalRotation: {x: 0.08336635, y: 0.000000035749455, z: -0.000000026757931, w: 0.99651897}
+  m_LocalRotation: {x: 0.08336646, y: 0.000000035749466, z: -0.000000026757984, w: 0.99651897}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2441,7 +2470,7 @@ MonoBehaviour:
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
     m_InputAxisValue: 0
-    m_InvertAxis: 1
+    m_InvertAxis: 0
   m_LegacyRadius: 3.4028235e+38
   m_LegacyHeightOffset: 3.4028235e+38
   m_LegacyHeadingBias: 3.4028235e+38

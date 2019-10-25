@@ -1,26 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AI_ZombieScript : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+    [SerializeField] private new Rigidbody rigidbody;
+    private NavMeshAgent ai;
+    
 
-    [SerializeField] private float m_moveSpeed = 2;
-    [SerializeField] private float m_turnSpeed = 200;
-    [SerializeField] private Animator m_animator;
-    [SerializeField] private Rigidbody m_rigidBody;
-
-    private float m_currentV = 0;
-    private float m_currentH = 0;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+        if (!rigidbody)
+        {
+            rigidbody = GetComponent<Rigidbody>();
+        }
+        if (!ai)
+        {
+            ai = GetComponent<NavMeshAgent>();
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
+    {
+        Move();
+    }
+
+    void Move()
     {
         
     }

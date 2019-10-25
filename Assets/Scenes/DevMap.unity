@@ -658,6 +658,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 285674293}
   rigidbody: {fileID: 285674292}
+  speed: 30
+  directionChangeInterval: 1
+  maxHeadingChange: 15
 --- !u!1001 &286001689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3094,17 +3097,17 @@ PrefabInstance:
     - target: {fileID: 5575020404193138624, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.08336703
+      value: 0.08336715
       objectReference: {fileID: 0}
     - target: {fileID: 5575020404193138624, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000035749537
+      value: 0.000000035749828
       objectReference: {fileID: 0}
     - target: {fileID: 5575020404193138624, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000002675833
+      value: -0.000000026759437
       objectReference: {fileID: 0}
     - target: {fileID: 5575020404193138624, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
@@ -3114,17 +3117,17 @@ PrefabInstance:
     - target: {fileID: 5575020405310550862, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.05919337
+      value: 0.0591932
       objectReference: {fileID: 0}
     - target: {fileID: 5575020405310550862, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000013722339
+      value: 0.000000013721692
       objectReference: {fileID: 0}
     - target: {fileID: 5575020405310550862, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000006292399
+      value: -0.00000006291292
       objectReference: {fileID: 0}
     - target: {fileID: 5575020405000368024, guid: c974635f7cae4c741ab2254176b8c9a6,
         type: 3}

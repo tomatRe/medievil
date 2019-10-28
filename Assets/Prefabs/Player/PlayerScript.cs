@@ -29,6 +29,21 @@ public class PlayerScript : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float jump = Input.GetAxis("Jump");
+        Vector3 forwardH = Vector3.zero;
+        Vector3 forwardV = Vector3.zero;
+
+
+        if (vertical > 0.0f)
+        {
+            forwardH = camera.transform.forward * vertical * speed * Time.deltaTime;
+        }
+        if (horizontal > 0.0f)
+        {
+            forwardV = camera.transform.right * horizontal * speed * Time.deltaTime;
+        }
+
+        Debug.DrawLine(camera.transform.position, forwardH, Color.red);
+        GetComponent<Rigidbody>().velocity = forwardH;
 
         /*
          * Movement relative to the camera
@@ -40,9 +55,10 @@ public class PlayerScript : MonoBehaviour
 
         Debug.Log(moveVector);
 
-        */
+        
 
         GetComponent<Rigidbody>().velocity = (new Vector3(horizontal * speed * Time.deltaTime, GetComponent<Rigidbody>().velocity.y, vertical * speed * Time.deltaTime));
+        */
 
         if (jump > 0)
         {

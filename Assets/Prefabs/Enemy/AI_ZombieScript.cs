@@ -7,12 +7,21 @@ public class AI_ZombieScript : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private new Rigidbody rigidbody;
+    [SerializeField] private float pursuitDuration;
     private NavMeshAgent ai;
+
+    //Movement
     public float speed = 5;
     public float directionChangeInterval = 1;
     public float maxHeadingChange = 30;
     float heading;
     Vector3 targetRotation;
+
+    //IA States
+    private int currentState = 0;
+    private string[] states = { "wandering", "pursuit", "attacking"};
+    private float CurrentPursuitDuration = 0;
+    Transform playerLocation;
 
 
     void Awake()
@@ -42,15 +51,52 @@ public class AI_ZombieScript : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(states[currentState]);
+        switch (currentState)
+        {
+            case 0:
+                Wander();
+                break;
+
+            case 1:
+                MoveToPlayer();
+                break;
+
+            case 2:
+                Attack();
+                break;
+
+            default:
+                Wander();
+                break;
+        }
+    }
+
+    void Wander()
+    {
         transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, targetRotation, Time.deltaTime * directionChangeInterval);
         var forward = transform.TransformDirection(Vector3.forward);
 
-        GetComponent<Rigidbody>().velocity = forward*speed*Time.deltaTime;
+        GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
+        animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
+    }
 
+    void Attack()
+    {
+        //To Do
+    }
 
-        if (GetComponent<Rigidbody>().velocity.magnitude > 0.1f)
+    void MoveToPlayer()
+    {
+        CurrentPursuitDuration += Time.deltaTime;
+        ai.SetDestination(playerLocation.position);
+
+        Debug.Log(CurrentPursuitDuration);
+
+        if (CurrentPursuitDuration >= pursuitDuration)
         {
-            
+            currentState = 0;
+            CurrentPursuitDuration = 0;
         }
     }
 
@@ -72,8 +118,13 @@ public class AI_ZombieScript : MonoBehaviour
         targetRotation = new Vector3(0, heading, 0);
     }
 
-    void Move()
+    private void OnTriggerEnter(Collider other)
     {
-        //ai.SetDestination();
+        if (other.tag == "Player")
+        {
+            playerLocation = other.transform;
+            currentState = 1;
+            //MoveToPlayer();
+        }
     }
 }

@@ -5,12 +5,16 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
 
-    //[SerializeField] private float cameraSensitivity = 2;
+    [SerializeField] private float health = 100;
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpSpeed = 100;
+    [SerializeField] private float AttackDuration = 1;
     [SerializeField] private Transform model;
     [SerializeField] private new Camera camera;
+    [SerializeField] private Transform weaponCollision;
     private Animation anim;
+    private float attackTime = 0;
+    bool attacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,29 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         Move();
+        if (Input.GetButton("Fire1"))
+        {
+            Attack();
+        }
+    }
+
+    void Attack()
+    {
+        anim.Play("attack");
+        weaponCollision.GetComponent<BoxCollider>().enabled = true;
+        attacking = true;
+    }
+
+    void TakeDamage()
+    {
+        health -= 15;
+
+
+        Vector3 fuerzaSalto = new Vector3
+                (GetComponent<Rigidbody>().velocity.x,
+                30, GetComponent<Rigidbody>().velocity.z);
+
+        GetComponent<Rigidbody>().AddForce(fuerzaSalto);
     }
 
     void Move()
@@ -29,40 +56,20 @@ public class PlayerScript : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float jump = Input.GetAxis("Jump");
-        Vector3 forwardH = Vector3.zero;
-        Vector3 forwardV = Vector3.zero;
 
+        Vector3 speedVector = new Vector3
+            (horizontal * speed * Time.deltaTime,
+            GetComponent<Rigidbody>().velocity.y,
+            vertical * speed * Time.deltaTime);
 
-        if (vertical > 0.0f)
-        {
-            forwardH = camera.transform.forward * vertical * speed * Time.deltaTime;
-        }
-        if (horizontal > 0.0f)
-        {
-            forwardV = camera.transform.right * horizontal * speed * Time.deltaTime;
-        }
-
-        Debug.DrawLine(camera.transform.position, forwardH, Color.red);
-        GetComponent<Rigidbody>().velocity = forwardH;
-
-        /*
-         * Movement relative to the camera
-         * 
-        Vector3 moveVector = new Vector3(transform.position.x * horizontal,
-            0f, (transform.position.z - camera.transform.position.z) * vertical);
-
-        GetComponent<Rigidbody>().AddForce(moveVector * speed * Time.deltaTime, ForceMode.Acceleration);
-
-        Debug.Log(moveVector);
-
-        
-
-        GetComponent<Rigidbody>().velocity = (new Vector3(horizontal * speed * Time.deltaTime, GetComponent<Rigidbody>().velocity.y, vertical * speed * Time.deltaTime));
-        */
+        GetComponent<Rigidbody>().velocity = speedVector;
 
         if (jump > 0)
         {
-            Vector3 fuerzaSalto = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpSpeed, GetComponent<Rigidbody>().velocity.z);
+            Vector3 fuerzaSalto = new Vector3
+                (GetComponent<Rigidbody>().velocity.x,
+                jumpSpeed, GetComponent<Rigidbody>().velocity.z);
+
             GetComponent<Rigidbody>().AddForce(fuerzaSalto);
         }
 
@@ -73,24 +80,52 @@ public class PlayerScript : MonoBehaviour
     {
         Vector3 movement = new Vector3(horizontal, 0, vertical);
 
-        if (horizontal > 0.1f || horizontal < -0.1f || vertical > 0.1f || vertical < -0.1f)
+        if (!attacking)
         {
-            anim.Play("run");
-
-            if (camera.transform.rotation.y > 90 || camera.transform.rotation.y < -90)
+            if (horizontal > 0.1f || horizontal < -0.1f ||
+                vertical > 0.1f || vertical < -0.1f)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-movement), 0.15F);
+                anim.Play("run");
+
+                if (camera.transform.rotation.y > 90 ||
+                    camera.transform.rotation.y < -90)
+                {
+                    transform.rotation = Quaternion.Slerp
+                        (transform.rotation,
+                        Quaternion.LookRotation(-movement), 0.15F);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Slerp
+                        (transform.rotation,
+                        Quaternion.LookRotation(movement), 0.15F);
+                }
+
+
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F);
+                anim.Play("idle");
             }
-
-            
         }
         else
         {
-            anim.Play("idle");
+            attackTime += Time.deltaTime;
+            if (attackTime >= AttackDuration)
+            {
+                attacking = false;
+                attackTime = 0;
+                weaponCollision.GetComponent<BoxCollider>().enabled = false;
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            TakeDamage();
+            other.SendMessage("Attack");
         }
     }
 }

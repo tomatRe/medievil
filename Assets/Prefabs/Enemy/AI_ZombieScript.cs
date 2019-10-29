@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,6 +24,10 @@ public class AI_ZombieScript : MonoBehaviour
     private float CurrentPursuitDuration = 0;
     Transform playerLocation;
 
+    //Attack variables
+    [SerializeField]private float attackDuration = 1;
+    private float currentAttackDuration = 0;
+
 
     void Awake()
     {
@@ -43,7 +48,7 @@ public class AI_ZombieScript : MonoBehaviour
 
     private void Start()
     {
-        heading = Random.Range(0, 360);
+        heading = UnityEngine.Random.Range(0, 360);
         transform.eulerAngles = new Vector3(0, heading, 0);
 
         StartCoroutine(NewHeading());
@@ -72,6 +77,19 @@ public class AI_ZombieScript : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        currentAttackDuration += Time.deltaTime;
+        currentState = 2;
+        animator.SetBool("Attack", true);
+
+        if (currentAttackDuration >= attackDuration)
+        {
+            currentState = 1;
+            animator.SetBool("Attack", false);
+        }
+    }
+
     void Wander()
     {
         transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, targetRotation, Time.deltaTime * directionChangeInterval);
@@ -79,11 +97,6 @@ public class AI_ZombieScript : MonoBehaviour
 
         GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
         animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
-    }
-
-    void Attack()
-    {
-        //To Do
     }
 
     void MoveToPlayer()
@@ -114,7 +127,7 @@ public class AI_ZombieScript : MonoBehaviour
     {
         var floor = Mathf.Clamp(heading - maxHeadingChange, 0, 360);
         var ceil = Mathf.Clamp(heading + maxHeadingChange, 0, 360);
-        heading = Random.Range(floor, ceil);
+        heading = UnityEngine.Random.Range(floor, ceil);
         targetRotation = new Vector3(0, heading, 0);
     }
 

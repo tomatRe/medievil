@@ -14,7 +14,6 @@ public class swordScript : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Debug.LogError("HIT!");
             other.SendMessage("TakeDamage");
         }
     }

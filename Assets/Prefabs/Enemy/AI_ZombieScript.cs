@@ -105,8 +105,11 @@ public class AI_ZombieScript : MonoBehaviour
     {
         animator.SetBool("Dead", true);
         GetComponent<NavMeshAgent>().speed = 0;
-        tag = "";
-        StartCoroutine(DieDelay());
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+        tag = "Dead";
+        //StartCoroutine(DieDelay());
     }
 
     void Wander()

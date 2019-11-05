@@ -338,10 +338,12 @@ GameObject:
   - component: {fileID: 95446636183784616}
   - component: {fileID: 54174046382449110}
   - component: {fileID: 136043099458248162}
-  - component: {fileID: 114062226022497710}
+  - component: {fileID: 285674298}
+  - component: {fileID: 285674294}
+  - component: {fileID: 285674295}
   m_Layer: 0
   m_Name: FreeZombieSimpleMovement
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,7 +357,7 @@ Transform:
   m_GameObject: {fileID: 1190601789873990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4905042125392202}
   - {fileID: 4590061679466020}
@@ -411,7 +413,43 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &114062226022497710
+--- !u!136 &285674298
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190601789873990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 3.3069186
+  m_Height: 6.6138372
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6206517, z: -0.0640378}
+--- !u!195 &285674294
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190601789873990}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.03
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &285674295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,14 +458,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1190601789873990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58d6da23a2cbdbf419e581162aa2eaaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e279b37cecc13446b48f104db1d1b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 0.3
-  m_turnSpeed: 100
-  m_animator: {fileID: 95446636183784616}
-  m_rigidBody: {fileID: 54174046382449110}
-  m_controlMode: 0
+  animator: {fileID: 95446636183784616}
+  rigidbody: {fileID: 54174046382449110}
+  pursuitDuration: 15
+  health: 30
+  speed: 30
+  directionChangeInterval: 1
+  maxHeadingChange: 180
+  attackDuration: 1
 --- !u!1 &1236329582464368
 GameObject:
   m_ObjectHideFlags: 0

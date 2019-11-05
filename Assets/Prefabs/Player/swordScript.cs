@@ -12,8 +12,9 @@ public class swordScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player")
+        if (other.tag == "Enemy")
         {
+            Debug.LogError("HIT!");
             other.SendMessage("TakeDamage");
         }
     }

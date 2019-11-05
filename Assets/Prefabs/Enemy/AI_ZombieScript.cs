@@ -9,6 +9,7 @@ public class AI_ZombieScript : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float pursuitDuration;
+    [SerializeField] private float health = 30;
     private NavMeshAgent ai;
 
     //Movement
@@ -50,13 +51,13 @@ public class AI_ZombieScript : MonoBehaviour
     {
         heading = UnityEngine.Random.Range(0, 360);
         transform.eulerAngles = new Vector3(0, heading, 0);
-
+        playerLocation = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(NewHeading());
     }
 
     private void Update()
     {
-        Debug.Log(states[currentState]);
+        //Debug.Log(states[currentState]);
         switch (currentState)
         {
             case 0:
@@ -90,6 +91,24 @@ public class AI_ZombieScript : MonoBehaviour
         }
     }
 
+    void TakeDamage()
+    {
+        health -= 15;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        animator.SetBool("Dead", true);
+        GetComponent<NavMeshAgent>().speed = 0;
+        tag = "";
+        StartCoroutine(DieDelay());
+    }
+
     void Wander()
     {
         transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, targetRotation, Time.deltaTime * directionChangeInterval);
@@ -104,13 +123,19 @@ public class AI_ZombieScript : MonoBehaviour
         CurrentPursuitDuration += Time.deltaTime;
         ai.SetDestination(playerLocation.position);
 
-        Debug.Log(CurrentPursuitDuration);
+        //Debug.Log(CurrentPursuitDuration);
 
         if (CurrentPursuitDuration >= pursuitDuration)
         {
             currentState = 0;
             CurrentPursuitDuration = 0;
         }
+    }
+
+    IEnumerator DieDelay()
+    {
+        Destroy(gameObject);
+        yield return new WaitForSeconds(10);
     }
 
     IEnumerator NewHeading()

@@ -110,6 +110,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
+            //Debug.Log(attackTime);
             attackTime += Time.deltaTime;
             if (attackTime >= AttackDuration)
             {

@@ -12,7 +12,9 @@ public class swordScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" &&
+            Vector3.Distance(other.transform.position,
+            transform.position) <= 3.5f)
         {
             other.SendMessage("TakeDamage");
         }

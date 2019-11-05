@@ -431,6 +431,7 @@ MonoBehaviour:
   rigidbody: {fileID: 54174046382449110}
   pursuitDuration: 15
   health: 30
+  coins: {fileID: 0}
   speed: 30
   directionChangeInterval: 1
   maxHeadingChange: 180
@@ -500,6 +501,7 @@ MonoBehaviour:
   rigidbody: {fileID: 54174046382449110}
   pursuitDuration: 15
   health: 30
+  coins: {fileID: 2015777026037224324, guid: b3451a776eb309b4ea6c36d6611ccbc5, type: 3}
   speed: 30
   directionChangeInterval: 1
   maxHeadingChange: 180

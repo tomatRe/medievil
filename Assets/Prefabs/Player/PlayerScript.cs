@@ -12,17 +12,17 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Transform model;
     [SerializeField] private new Camera camera;
     [SerializeField] private Transform weaponCollision;
+    [SerializeField] private int score = 0;
     private Animation anim;
     private float attackTime = 0;
     bool attacking = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         anim = model.GetComponent<Animation>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -46,9 +46,9 @@ public class PlayerScript : MonoBehaviour
 
         Vector3 fuerzaSalto = new Vector3
                 (GetComponent<Rigidbody>().velocity.x,
-                30, GetComponent<Rigidbody>().velocity.z);
+                100, GetComponent<Rigidbody>().velocity.z);
 
-        GetComponent<Rigidbody>().AddForce(fuerzaSalto);
+        GetComponent<Rigidbody>().AddForce(fuerzaSalto, ForceMode.Impulse);
     }
 
     void Move()
@@ -56,8 +56,6 @@ public class PlayerScript : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float jump = Input.GetAxis("Jump");
-        //float playerHeight = GetComponent<CapsuleCollider>().bounds.size.y;
-        //RaycastHit hit = Physics.Raycast(transform.position, new Vector3(0, -1, 0));
 
         Vector3 speedVector = new Vector3
             (horizontal * speed * Time.deltaTime,
@@ -66,20 +64,10 @@ public class PlayerScript : MonoBehaviour
 
         GetComponent<Rigidbody>().velocity = speedVector;
 
-        /* Jump movement
-        if (IsGrounded() && jump > 0)
-        {
-            Vector3 fuerzaSalto = new Vector3
-                (GetComponent<Rigidbody>().velocity.x,
-                jumpSpeed, GetComponent<Rigidbody>().velocity.z);
-
-            GetComponent<Rigidbody>().AddForce(fuerzaSalto, ForceMode.Impulse);
-        }*/
-
         AnimateMovement(horizontal, vertical);
     }
 
-    void AnimateMovement(float horizontal, float vertical)
+    private void AnimateMovement(float horizontal, float vertical)
     {
         Vector3 movement = new Vector3(horizontal, 0, vertical);
 
@@ -129,6 +117,12 @@ public class PlayerScript : MonoBehaviour
         return Physics.Raycast
             (transform.position, -Vector3.up,
             GetComponent<CapsuleCollider>().bounds.extents.y - 0.25f);
+    }
+
+    private void PickUp()
+    {
+        score += 7;
+        //PickUpSound
     }
 
     private void OnTriggerEnter(Collider other)

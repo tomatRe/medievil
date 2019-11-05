@@ -10,6 +10,8 @@ public class AI_ZombieScript : MonoBehaviour
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float pursuitDuration;
     [SerializeField] private float health = 30;
+    [SerializeField] private Transform lootPosition;
+    [SerializeField] private GameObject coins;
     private NavMeshAgent ai;
 
     //Movement
@@ -108,8 +110,15 @@ public class AI_ZombieScript : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
+        SpawnLoot();
         tag = "Dead";
         //StartCoroutine(DieDelay());
+    }
+
+    void SpawnLoot()
+    {
+        if (coins != null)
+            Instantiate(coins, lootPosition, true);
     }
 
     void Wander()

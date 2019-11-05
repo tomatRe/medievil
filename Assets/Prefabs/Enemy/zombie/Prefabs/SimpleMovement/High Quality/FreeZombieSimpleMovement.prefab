@@ -337,10 +337,12 @@ GameObject:
   - component: {fileID: 4257605397364450}
   - component: {fileID: 95446636183784616}
   - component: {fileID: 54174046382449110}
-  - component: {fileID: 136043099458248162}
   - component: {fileID: 285674298}
-  - component: {fileID: 285674294}
   - component: {fileID: 285674295}
+  - component: {fileID: 586049148635516303}
+  - component: {fileID: 285674299}
+  - component: {fileID: 285674294}
+  - component: {fileID: 2223953998594868285}
   m_Layer: 0
   m_Name: FreeZombieSimpleMovement
   m_TagString: Enemy
@@ -399,20 +401,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!136 &136043099458248162
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190601789873990}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!136 &285674298
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -427,6 +415,53 @@ CapsuleCollider:
   m_Height: 6.6138372
   m_Direction: 1
   m_Center: {x: 0, y: 0.6206517, z: -0.0640378}
+--- !u!114 &285674295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190601789873990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e279b37cecc13446b48f104db1d1b7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95446636183784616}
+  rigidbody: {fileID: 54174046382449110}
+  pursuitDuration: 15
+  health: 30
+  speed: 30
+  directionChangeInterval: 1
+  maxHeadingChange: 180
+  attackDuration: 1
+--- !u!136 &586049148635516303
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190601789873990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 3.3069186
+  m_Height: 6.6138372
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6206517, z: -0.0640378}
+--- !u!65 &285674299
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190601789873990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.42048264, y: 0.96393377, z: 0.44382226}
+  m_Center: {x: 0.0059099197, y: 0.5571555, z: 0.0020688772}
 --- !u!195 &285674294
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -449,7 +484,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &285674295
+--- !u!114 &2223953998594868285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

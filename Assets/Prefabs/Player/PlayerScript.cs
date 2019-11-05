@@ -125,8 +125,16 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            TakeDamage();
-            other.SendMessage("Attack");
+            if (Vector3.Distance(other.transform.position, transform.position) < 2)
+            {
+                TakeDamage();
+                other.SendMessage("Attack");
+            }
+            else
+            {
+                Debug.Log("Not on range to attack: " + Vector3.Distance(other.transform.position, transform.position));
+            }
+            
         }
     }
 }

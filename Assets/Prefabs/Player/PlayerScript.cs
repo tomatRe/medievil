@@ -13,9 +13,11 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private new Camera camera;
     [SerializeField] private Transform weaponCollision;
     [SerializeField] private int score = 0;
+    [SerializeField] private bool hasSilverKey = false;
+    [SerializeField] private bool hasGoldKey = false;
     private Animation anim;
     private float attackTime = 0;
-    bool attacking = false;
+    private bool attacking = false;
 
 
     void Start()
@@ -135,6 +137,18 @@ public class PlayerScript : MonoBehaviour
                 other.SendMessage("Attack");
             }
             
+        }
+
+        if (other.tag == "SilverKey" && !hasSilverKey)
+        {
+            hasSilverKey = true;
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "GoldKey" && !hasGoldKey)
+        {
+            hasGoldKey = true;
+            Destroy(other.gameObject);
         }
     }
 }

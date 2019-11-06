@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Dead
+  - PickUp
+  - SilverKey
+  - GoldKey
   layers:
   - Default
   - TransparentFX

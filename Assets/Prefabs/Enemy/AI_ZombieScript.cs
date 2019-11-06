@@ -10,9 +10,11 @@ public class AI_ZombieScript : MonoBehaviour
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float pursuitDuration;
     [SerializeField] private float health = 30;
-    [SerializeField] private Transform lootPosition;
     [SerializeField] private GameObject coins;
+    [SerializeField] private int deSpawnDelay = 40;
     private NavMeshAgent ai;
+    private bool dead = false;
+    private float currentLifeSpan = 0;
 
     //Movement
     public float speed = 5;
@@ -59,25 +61,37 @@ public class AI_ZombieScript : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(states[currentState]);
-        switch (currentState)
+        if (!dead)
         {
-            case 0:
-                Wander();
-                break;
+            switch (currentState)
+            {
+                case 0:
+                    Wander();
+                    break;
 
-            case 1:
-                MoveToPlayer();
-                break;
+                case 1:
+                    MoveToPlayer();
+                    break;
 
-            case 2:
-                Attack();
-                break;
+                case 2:
+                    Attack();
+                    break;
 
-            default:
-                Wander();
-                break;
+                default:
+                    Wander();
+                    break;
+            }
         }
+        else
+        {
+            currentLifeSpan += Time.deltaTime;
+
+            if (currentLifeSpan >= deSpawnDelay)
+            {
+                Destroy(gameObject);
+            }
+        }
+        
     }
 
     void Attack()
@@ -112,13 +126,12 @@ public class AI_ZombieScript : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         SpawnLoot();
         tag = "Dead";
-        //StartCoroutine(DieDelay());
     }
 
     void SpawnLoot()
     {
         if (coins != null)
-            Instantiate(coins, lootPosition, true);
+            Instantiate(coins, transform);
     }
 
     void Wander()
@@ -142,12 +155,6 @@ public class AI_ZombieScript : MonoBehaviour
             currentState = 0;
             CurrentPursuitDuration = 0;
         }
-    }
-
-    IEnumerator DieDelay()
-    {
-        Destroy(gameObject);
-        yield return new WaitForSeconds(10);
     }
 
     IEnumerator NewHeading()

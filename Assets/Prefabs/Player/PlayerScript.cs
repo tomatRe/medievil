@@ -150,5 +150,17 @@ public class PlayerScript : MonoBehaviour
             hasGoldKey = true;
             Destroy(other.gameObject);
         }
+
+        if (other.tag == "GoldenGate" && hasGoldKey)
+        {
+            hasGoldKey = false;
+            other.GetComponent<Animator>().enabled = true;
+        }
+
+        if (other.tag == "SilverGate" && hasSilverKey)
+        {
+            hasSilverKey = false;
+            other.GetComponent<Animator>().enabled = true;
+        }
     }
 }

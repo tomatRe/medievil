@@ -9,6 +9,8 @@ TagManager:
   - PickUp
   - SilverKey
   - GoldKey
+  - GoldenGate
+  - SilverGate
   layers:
   - Default
   - TransparentFX

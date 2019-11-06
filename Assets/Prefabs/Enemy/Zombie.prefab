@@ -683,9 +683,9 @@ MonoBehaviour:
   animator: {fileID: 8796244391320192966}
   rigidbody: {fileID: 8899647900447926968}
   pursuitDuration: 15
-  health: 30
-  lootPosition: {fileID: 0}
+  health: 120
   coins: {fileID: 0}
+  deSpawnDelay: 40
   speed: 30
   directionChangeInterval: 1
   maxHeadingChange: 180
@@ -755,8 +755,8 @@ MonoBehaviour:
   rigidbody: {fileID: 8899647900447926968}
   pursuitDuration: 15
   health: 30
-  lootPosition: {fileID: 0}
   coins: {fileID: 2015777026037224324, guid: b3451a776eb309b4ea6c36d6611ccbc5, type: 3}
+  deSpawnDelay: 40
   speed: 30
   directionChangeInterval: 1
   maxHeadingChange: 180

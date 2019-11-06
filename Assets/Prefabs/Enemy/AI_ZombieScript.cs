@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,10 +6,10 @@ using UnityEngine.AI;
 public class AI_ZombieScript : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject coins;
     [SerializeField] private new Rigidbody rigidbody;
     [SerializeField] private float pursuitDuration;
     [SerializeField] private float health = 30;
-    [SerializeField] private GameObject coins;
     [SerializeField] private int deSpawnDelay = 40;
     private NavMeshAgent ai;
     private bool dead = false;
@@ -25,7 +24,6 @@ public class AI_ZombieScript : MonoBehaviour
 
     //IA States
     private int currentState = 0;
-    private string[] states = { "wandering", "pursuit", "attacking"};
     private float CurrentPursuitDuration = 0;
     Transform playerLocation;
 
@@ -53,7 +51,7 @@ public class AI_ZombieScript : MonoBehaviour
 
     private void Start()
     {
-        heading = UnityEngine.Random.Range(0, 360);
+        heading = Random.Range(0, 360);
         transform.eulerAngles = new Vector3(0, heading, 0);
         playerLocation = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(NewHeading());
@@ -119,11 +117,17 @@ public class AI_ZombieScript : MonoBehaviour
 
     void Die()
     {
+        dead = true;
+        maxHeadingChange = 0;
+
+        animator.SetBool("Attack", false);
         animator.SetBool("Dead", true);
+
         GetComponent<NavMeshAgent>().speed = 0;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
+
         SpawnLoot();
         tag = "Dead";
     }
@@ -136,21 +140,25 @@ public class AI_ZombieScript : MonoBehaviour
 
     void Wander()
     {
-        transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, targetRotation, Time.deltaTime * directionChangeInterval);
-        var forward = transform.TransformDirection(Vector3.forward);
+        if (!dead)
+        {
+            transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, targetRotation, Time.deltaTime * directionChangeInterval);
+            var forward = transform.TransformDirection(Vector3.forward);
 
-        GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
-        animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
+            GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
+            animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
+        }
     }
 
     void MoveToPlayer()
     {
         CurrentPursuitDuration += Time.deltaTime;
         ai.SetDestination(playerLocation.position);
+        animator.SetFloat("MoveSpeed", 300);
 
         //Debug.Log(CurrentPursuitDuration);
 
-        if (CurrentPursuitDuration >= pursuitDuration)
+        if (CurrentPursuitDuration >= pursuitDuration && !dead)
         {
             currentState = 0;
             CurrentPursuitDuration = 0;
@@ -159,7 +167,7 @@ public class AI_ZombieScript : MonoBehaviour
 
     IEnumerator NewHeading()
     {
-        while (true)
+        while (!dead)
         {
             NewHeadingRoutine();
             yield return new WaitForSeconds(directionChangeInterval);
@@ -169,15 +177,18 @@ public class AI_ZombieScript : MonoBehaviour
 
     void NewHeadingRoutine()
     {
-        var floor = Mathf.Clamp(heading - maxHeadingChange, 0, 360);
-        var ceil = Mathf.Clamp(heading + maxHeadingChange, 0, 360);
-        heading = UnityEngine.Random.Range(floor, ceil);
-        targetRotation = new Vector3(0, heading, 0);
+        if (!dead)
+        {
+            var floor = Mathf.Clamp(heading - maxHeadingChange, 0, 360);
+            var ceil = Mathf.Clamp(heading + maxHeadingChange, 0, 360);
+            heading = Random.Range(floor, ceil);
+            targetRotation = new Vector3(0, heading, 0);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !dead)
         {
             playerLocation = other.transform;
             currentState = 1;

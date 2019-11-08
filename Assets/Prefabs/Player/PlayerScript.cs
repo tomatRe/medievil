@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
 
     //UI
     [SerializeField] private Text canvasText;
+    [SerializeField] private Text canvasScore;
     [SerializeField] private Image canvasGoldKey;
     [SerializeField] private Image canvasSilverKey;
     [SerializeField] private Sprite missingGoldKeySprite;
@@ -164,6 +165,8 @@ public class PlayerScript : MonoBehaviour
         score += 7;
         source.clip = pickUpGold;
         source.Play();
+
+        canvasScore.text = "Score " + score;
     }
 
     private void PickUpKey()

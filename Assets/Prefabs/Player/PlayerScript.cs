@@ -9,12 +9,23 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float speed = 10;
     [SerializeField] private float jumpSpeed = 100;
     [SerializeField] private float AttackDuration = 1;
-    [SerializeField] private Transform model;
-    [SerializeField] private new Camera camera;
-    [SerializeField] private Transform weaponCollision;
     [SerializeField] private int score = 0;
     [SerializeField] private bool hasSilverKey = false;
     [SerializeField] private bool hasGoldKey = false;
+    [SerializeField] private Transform model;
+    [SerializeField] private new Camera camera;
+    [SerializeField] private Transform weaponCollision;
+
+
+    //Audio
+    private AudioSource source;
+    [SerializeField] private AudioClip[] steps;
+    [SerializeField] private AudioClip attack;
+    [SerializeField] private AudioClip damage;
+    [SerializeField] private AudioClip openDoor;
+    [SerializeField] private AudioClip pickUpKey;
+    [SerializeField] private AudioClip pickUpGold;
+
     private Animation anim;
     private float attackTime = 0;
     private bool attacking = false;
@@ -23,6 +34,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         anim = model.GetComponent<Animation>();
+        source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -39,18 +51,26 @@ public class PlayerScript : MonoBehaviour
         anim.Play("attack");
         weaponCollision.GetComponent<BoxCollider>().enabled = true;
         attacking = true;
+
+        source.clip = attack;
+        source.Play();
     }
 
     void TakeDamage()
     {
         health -= 15;
 
+        source.clip = damage;
+        source.Play();
 
-        Vector3 fuerzaSalto = new Vector3
+        if (IsGrounded())
+        {
+            Vector3 fuerzaSalto = new Vector3
                 (GetComponent<Rigidbody>().velocity.x,
-                100, GetComponent<Rigidbody>().velocity.z);
+                50, GetComponent<Rigidbody>().velocity.z);
 
-        GetComponent<Rigidbody>().AddForce(fuerzaSalto, ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(fuerzaSalto, ForceMode.Impulse);
+        }
     }
 
     void Move()
@@ -79,6 +99,11 @@ public class PlayerScript : MonoBehaviour
                 vertical > 0.1f || vertical < -0.1f)
             {
                 anim.Play("run");
+                if (!source.isPlaying)
+                {
+                    source.clip = steps[Random.Range(0, steps.Length)];
+                    source.Play();
+                }
 
                 if (camera.transform.rotation.y > 90 ||
                     camera.transform.rotation.y < -90)
@@ -124,7 +149,20 @@ public class PlayerScript : MonoBehaviour
     private void PickUp()
     {
         score += 7;
-        //PickUpSound
+        source.clip = pickUpGold;
+        source.Play();
+    }
+
+    private void PickUpKey()
+    {
+        source.clip = pickUpKey;
+        source.Play();
+    }
+
+    private void OpenGate()
+    {
+        source.clip = openDoor;
+        source.Play();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -143,24 +181,28 @@ public class PlayerScript : MonoBehaviour
         {
             hasSilverKey = true;
             Destroy(other.gameObject);
+            PickUpKey();
         }
 
         if (other.tag == "GoldKey" && !hasGoldKey)
         {
             hasGoldKey = true;
             Destroy(other.gameObject);
+            PickUpKey();
         }
 
         if (other.tag == "GoldenGate" && hasGoldKey)
         {
             hasGoldKey = false;
             other.GetComponent<Animator>().enabled = true;
+            OpenGate();
         }
 
         if (other.tag == "SilverGate" && hasSilverKey)
         {
             hasSilverKey = false;
             other.GetComponent<Animator>().enabled = true;
+            OpenGate();
         }
     }
 }

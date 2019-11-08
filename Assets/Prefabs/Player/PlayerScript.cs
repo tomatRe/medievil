@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Transform model;
     [SerializeField] private new Camera camera;
     [SerializeField] private Transform weaponCollision;
+
+    //UI
+    [SerializeField] private Text canvasText;
+    [SerializeField] private Image canvasGoldKey;
+    [SerializeField] private Image canvasSilverKey;
+    [SerializeField] private Sprite missingGoldKeySprite;
+    [SerializeField] private Sprite missingSilverKeySprite;
+    [SerializeField] private Sprite goldKeySprite;
+    [SerializeField] private Sprite silverKeySprite;
+
 
 
     //Audio
@@ -62,6 +73,8 @@ public class PlayerScript : MonoBehaviour
 
         source.clip = damage;
         source.Play();
+
+        canvasText.text = "Health " + health;
 
         if (IsGrounded())
         {
@@ -182,6 +195,7 @@ public class PlayerScript : MonoBehaviour
             hasSilverKey = true;
             Destroy(other.gameObject);
             PickUpKey();
+            canvasSilverKey.sprite = silverKeySprite;
         }
 
         if (other.tag == "GoldKey" && !hasGoldKey)
@@ -189,6 +203,7 @@ public class PlayerScript : MonoBehaviour
             hasGoldKey = true;
             Destroy(other.gameObject);
             PickUpKey();
+            canvasGoldKey.sprite = goldKeySprite;
         }
 
         if (other.tag == "GoldenGate" && hasGoldKey)
@@ -196,6 +211,7 @@ public class PlayerScript : MonoBehaviour
             hasGoldKey = false;
             other.GetComponent<Animator>().enabled = true;
             OpenGate();
+            canvasGoldKey.sprite = missingGoldKeySprite;
         }
 
         if (other.tag == "SilverGate" && hasSilverKey)
@@ -203,6 +219,7 @@ public class PlayerScript : MonoBehaviour
             hasSilverKey = false;
             other.GetComponent<Animator>().enabled = true;
             OpenGate();
+            canvasSilverKey.sprite = missingSilverKeySprite;
         }
     }
 }

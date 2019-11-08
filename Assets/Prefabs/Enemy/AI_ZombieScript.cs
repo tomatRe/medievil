@@ -15,6 +15,11 @@ public class AI_ZombieScript : MonoBehaviour
     private bool dead = false;
     private float currentLifeSpan = 0;
 
+    //Sound
+    private AudioSource source;
+    [SerializeField] private AudioClip hit;
+    [SerializeField] private AudioClip growling;
+
     //Movement
     public float speed = 5;
     public float directionChangeInterval = 1;
@@ -51,6 +56,7 @@ public class AI_ZombieScript : MonoBehaviour
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         heading = Random.Range(0, 360);
         transform.eulerAngles = new Vector3(0, heading, 0);
         playerLocation = GameObject.FindGameObjectWithTag("Player").transform;
@@ -108,6 +114,8 @@ public class AI_ZombieScript : MonoBehaviour
     void TakeDamage()
     {
         health -= 15;
+        source.clip = hit;
+        source.Play();
 
         if (health <= 0)
         {
@@ -147,6 +155,15 @@ public class AI_ZombieScript : MonoBehaviour
 
             GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
             animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
+
+            if (Random.Range(0, 100) >= 98)//provability of growling
+            {
+                if (!source.isPlaying)
+                {
+                    source.clip = growling;
+                    source.Play();
+                }
+            }
         }
     }
 

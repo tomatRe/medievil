@@ -156,7 +156,7 @@ public class AI_ZombieScript : MonoBehaviour
             GetComponent<Rigidbody>().velocity = forward * speed * Time.deltaTime;
             animator.SetFloat("MoveSpeed", (forward * speed * Time.deltaTime).magnitude);
 
-            if (Random.Range(0, 100) >= 98)//provability of growling
+            if (Random.Range(0, 1000) >= 990)//provability of growling
             {
                 if (!source.isPlaying)
                 {

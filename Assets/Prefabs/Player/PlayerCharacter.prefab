@@ -473,7 +473,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986734811954261550}
-  m_LocalRotation: {x: 0.15648724, y: -0.00000006126786, z: 0.000000019800437, w: 0.98768}
+  m_LocalRotation: {x: 0.15648715, y: -0.00000006126786, z: 0.000000019800394, w: 0.98768}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1289,6 +1289,15 @@ MonoBehaviour:
   model: {fileID: 1986734812061442996}
   camera: {fileID: 1986734812206939419}
   weaponCollision: {fileID: 6838988745430895179}
+  canvasText: {fileID: 1949120780}
+  canvasGoldKey: {fileID: 1890191665}
+  canvasSilverKey: {fileID: 856533581}
+  missingGoldKeySprite: {fileID: 21300000, guid: 7b65edc757c487b408c585a37809dc11,
+    type: 3}
+  missingSilverKeySprite: {fileID: 21300000, guid: 5b5c9f5b1930d2a43bb1f311045ba8c3,
+    type: 3}
+  goldKeySprite: {fileID: 21300000, guid: 4b72ffe50034fe14d9d8a4f7f970ac86, type: 3}
+  silverKeySprite: {fileID: 21300000, guid: c5ed1a4fa5dfcb448b0ebc047f742fdf, type: 3}
   steps:
   - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}

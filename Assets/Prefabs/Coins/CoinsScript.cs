@@ -14,15 +14,10 @@ public class CoinsScript : MonoBehaviour
     private void Update()
     {
         currentTime += Time.deltaTime;
-
-        if (currentTime >= spawnDelay)
-        {
-            GetComponent<CapsuleCollider>().enabled = true;
-        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && currentTime >= spawnDelay)
         {
             other.SendMessage("PickUp");
             Destroy(gameObject);

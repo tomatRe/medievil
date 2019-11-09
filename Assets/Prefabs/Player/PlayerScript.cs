@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Transform weaponCollision;
 
     //UI
+    [SerializeField] private Text canvasScoreText;
     [SerializeField] private Text canvasText;
     [SerializeField] private Image canvasGoldKey;
     [SerializeField] private Image canvasSilverKey;
@@ -46,6 +47,9 @@ public class PlayerScript : MonoBehaviour
     {
         anim = model.GetComponent<Animation>();
         source = GetComponent<AudioSource>();
+
+        canvasScoreText.text = "Score " + score;
+        canvasText.text = "Health " + health;
     }
 
     void Update()
@@ -83,6 +87,12 @@ public class PlayerScript : MonoBehaviour
                 50, GetComponent<Rigidbody>().velocity.z);
 
             GetComponent<Rigidbody>().AddForce(fuerzaSalto, ForceMode.Impulse);
+        }
+
+        if (health <= 0)
+        {
+            UnityEngine.SceneManagement.
+                SceneManager.LoadScene("GameOverScreen");
         }
     }
 
@@ -162,8 +172,15 @@ public class PlayerScript : MonoBehaviour
     private void PickUp()
     {
         score += 7;
+
+        if (health + 15 < 250)
+            health += 15;
+
         source.clip = pickUpGold;
         source.Play();
+
+        canvasScoreText.text = "Score " + score;
+        canvasText.text = "Health " + health;
     }
 
     private void PickUpKey()
@@ -220,6 +237,12 @@ public class PlayerScript : MonoBehaviour
             other.GetComponent<Animator>().enabled = true;
             OpenGate();
             canvasSilverKey.sprite = missingSilverKeySprite;
+        }
+
+        if (other.tag == "Finish")
+        {
+            UnityEngine.SceneManagement.
+                SceneManager.LoadScene(0);
         }
     }
 }

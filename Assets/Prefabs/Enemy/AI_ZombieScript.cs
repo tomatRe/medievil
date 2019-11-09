@@ -7,8 +7,8 @@ public class AI_ZombieScript : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject coins;
+    [SerializeField] private Transform coinLocation;
     [SerializeField] private new Rigidbody rigidbody;
-    [SerializeField] private float pursuitDuration;
     [SerializeField] private float health = 30;
     [SerializeField] private int deSpawnDelay = 40;
     private NavMeshAgent ai;
@@ -28,6 +28,7 @@ public class AI_ZombieScript : MonoBehaviour
     Vector3 targetRotation;
 
     //IA States
+    [SerializeField] private float pursuitDuration;
     private int currentState = 0;
     private float CurrentPursuitDuration = 0;
     Transform playerLocation;
@@ -143,7 +144,7 @@ public class AI_ZombieScript : MonoBehaviour
     void SpawnLoot()
     {
         if (coins != null)
-            Instantiate(coins, transform);
+            Instantiate(coins, coinLocation, false);
     }
 
     void Wander()
@@ -160,8 +161,8 @@ public class AI_ZombieScript : MonoBehaviour
             {
                 if (!source.isPlaying)
                 {
-                    source.clip = growling;
-                    source.Play();
+                    //source.clip = growling;
+                    //source.Play();
                 }
             }
         }

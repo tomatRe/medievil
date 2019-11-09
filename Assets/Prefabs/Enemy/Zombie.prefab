@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &43240205974768053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3813388364309712454}
+  m_Layer: 0
+  m_Name: CoinsLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3813388364309712454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43240205974768053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8885234672827217292}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8881665989846487938
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +625,6 @@ GameObject:
   - component: {fileID: 8314631202506213089}
   - component: {fileID: 8881540052028686421}
   - component: {fileID: 8881540052028686424}
-  - component: {fileID: 7321872221437857619}
   - component: {fileID: -3927660762968187472}
   m_Layer: 0
   m_Name: Zombie
@@ -617,6 +646,7 @@ Transform:
   m_Children:
   - {fileID: 8885879704371462692}
   - {fileID: 8886128996647099722}
+  - {fileID: 3813388364309712454}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -682,10 +712,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8796244391320192966}
-  coins: {fileID: 0}
+  coins: {fileID: 2015777026037224324, guid: b3451a776eb309b4ea6c36d6611ccbc5, type: 3}
   rigidbody: {fileID: 8899647900447926968}
+  coinLocation: {fileID: 3813388364309712454}
   pursuitDuration: 15
-  health: 120
+  health: 30
   deSpawnDelay: 40
   hit: {fileID: 8300000, guid: 35a900a3b01314d47a4b5a04a1c7eed9, type: 3}
   growling: {fileID: 8300000, guid: 42dd561c92ef11d4d845cfae52cd7413, type: 3}
@@ -742,30 +773,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7321872221437857619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8882694159179519016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e279b37cecc13446b48f104db1d1b7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 8796244391320192966}
-  coins: {fileID: 2015777026037224324, guid: b3451a776eb309b4ea6c36d6611ccbc5, type: 3}
-  rigidbody: {fileID: 8899647900447926968}
-  pursuitDuration: 15
-  health: 30
-  deSpawnDelay: 40
-  hit: {fileID: 0}
-  growling: {fileID: 0}
-  speed: 30
-  directionChangeInterval: 1
-  maxHeadingChange: 180
-  attackDuration: 1
 --- !u!82 &-3927660762968187472
 AudioSource:
   m_ObjectHideFlags: 0
